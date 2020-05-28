@@ -25,7 +25,7 @@ namespace WienerLinien.Controllers
             HttpClient client = new HttpClient();
             var request = await client.GetStringAsync("https://www.wienerlinien.at/ogd_realtime/monitor?rbl=4409&activateTrafficInfo=stoerunglang");
             var response = JsonConvert.DeserializeObject<Models.WienerLinien>(request);
-            Response.Headers.Add("Refresh", "60");
+            Response.Headers.Add("Refresh", "20");
             return View(response);
         }
 
