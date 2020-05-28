@@ -1,0 +1,46 @@
+﻿@model WienerLinien
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@{
+    var daten = Model.data.monitors.FirstOrDefault();
+}
+<div class="card shadow" style="max-width:25rem;">
+    <div class="card-header bg-success p-2">
+        <h5 class="text-white">@daten.lines.FirstOrDefault().name &nbsp;
+                                     @daten.lines.FirstOrDefault().towards</h5>
+        <div class="text-white font-weight-bold">@daten.locationStop.properties.municipality @daten.locationStop.properties.title</div>
+    </div>
+    <div class="card-body">
+        <div class="row border-bottom">
+            <div class="col">Countdown</div>
+            <div class="col">Planned Time</div>
+            <div class="col">Real Time</div>
+        </div>
+        
+        @foreach (var item in daten.lines.FirstOrDefault().departures.departure)
+        {
+    <div class="row">
+        <div class="col">@item.departureTime.countdown</div>
+        <div class="col">@item.departureTime.timePlanned.ToShortTimeString()</div>
+        <div class="col">
+            @if (@item.departureTime.timeReal.ToShortTimeString() == "00:00")
+            {
+                
+            }
+            else
+            {
+                @item.departureTime.timeReal.ToShortTimeString()
+            }
+        </div>
+    </div>
+        }
+    </div>
+
+    <div class="card-footer">
+        @Model.message.value
+    </div>
+
+</div>
